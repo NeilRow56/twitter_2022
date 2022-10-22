@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
 import {initMongoose} from "../../lib/mongoose";
 import User from "../../models/User";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
 
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
   await initMongoose();
   const session = await unstable_getServerSession(req, res, authOptions);
 
