@@ -8,6 +8,13 @@ import {authOptions} from "./auth/[...nextauth]";
 export default async function handler(req, res) {
   await initMongoose();
   const session = await unstable_getServerSession(req,res,authOptions);
+
+  if (req.method === 'GET') {
+
+    const posts = await Post.find().exec()
+
+    res.json(posts)
+  }
  
 
   if (req.method === 'POST') {

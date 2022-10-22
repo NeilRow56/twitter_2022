@@ -1,16 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { useSession} from "next-auth/react";
 import useUserInfo from '../hooks/useUserInfo';
 import UsernameForm from '../components/UsernameForm';
 import PostForm from '../components/PostForm';
+import axios from 'axios';
 
 
 export default function Home() {
 
  
   const {userInfo, status: userInfoStatus } = useUserInfo()
+  const [posts, setposts] = useState([])
 
+  function fetchHomePosts() {
+    const posts = axios.get('/api/posts')
+    .then(response => {
+    setposts(response.data)  
+    } )
+  }
+
+  useEffect(() => {
+    fetchHomePosts()
+  }, [])
+   
   
 
   
@@ -36,6 +50,13 @@ export default function Home() {
           Home Page - Logged in as {userInfo.username}
         </h1>
         <PostForm />
+        <div >
+          {posts.length > 0 && posts.map(post => (
+            <div key={post._id}className='border-t border-twitterBorder p-5' >
+              { post.text }
+            </div>  
+          ))}
+        </div>
 
        
       </main>
