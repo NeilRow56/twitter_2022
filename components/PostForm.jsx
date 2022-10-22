@@ -3,13 +3,17 @@ import React, { useState } from 'react'
 import useUserInfo from '../hooks/useUserInfo'
 import axios from 'axios'
 
-const PostForm = () => {
+const PostForm = ( { onPost }) => {
     const { userInfo, status } = useUserInfo()
     const [text, setText ] = useState('')
 
     async function handlePostSubmit(e) {
         e.preventDefault()
         await axios.post('/api/posts', {text})
+        setText('')
+        if(onPost) {
+          onPost()
+        }
 
     }
 

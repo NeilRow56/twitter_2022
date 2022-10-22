@@ -49,7 +49,7 @@ export default function Home() {
         <h1 className='text-lg font-bold'>
           Home Page - Logged in as {userInfo.username}
         </h1>
-        <PostForm />
+        <PostForm onPost={() => {fetchHomePosts()}} />
         <div >
           {posts.length > 0 && posts.map(post => (
             <div key={post._id}className='border-t border-twitterBorder p-5' >
