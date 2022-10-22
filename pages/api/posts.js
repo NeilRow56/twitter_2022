@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
 
-    const posts = await Post.find().exec()
+    const posts = await Post.find().sort({createdAt: -1}).exec()
 
     res.json(posts)
   }
